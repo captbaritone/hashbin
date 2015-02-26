@@ -13,7 +13,7 @@ There are two tricks employed here.
 2. We store this encoded content in the hash of the URL. This segment of the
    URL has the unique property of not being sent to the server.
 
-## Doesn't this make the URL's super long?
+## Doesn't this make the URLs super long?
 
 Yes. However, in this age of URL shorteners, this is increasingly not
 a problem.
