@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>HashB.in</title>
+    <style>
+        #t {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            margin: 0;
+            padding: 10px;
+            font: 14px/20px monospace;
+            outline: none;
+            border: none;
+            box-sizing: border-box;
+        }
+    </style> 
+</head>
+<body>
+    <textarea spellcheck="false" id="t"></textarea>
+    <script>
+        var f, t = document.getElementById("t")
+        t.value = decodeURIComponent(window.location.hash.slice(1));
+        function updateUrl() {
+            clearInterval(f);
+            f = setTimeout(function() {
+                window.location.hash = encodeURIComponent(t.value);
+            }, 500);
+        }
+        t.addEventListener("keyup", updateUrl);
+    </script>
+</body>
+</html>
