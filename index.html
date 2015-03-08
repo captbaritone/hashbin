@@ -79,8 +79,11 @@
         var urlInput = document.getElementById("urlInput");
 
         t.value = LZString.decompressFromBase64(window.location.hash.slice(1));
-        t.focus();
-        updateUrl();
+        if(t.value.length === 0) {
+            t.focus();
+        }
+
+        updateUrl(); // Update urlInput and download link
 
         function updateUrl() {
             window.location.hash = LZString.compressToBase64(t.value);
