@@ -1,6 +1,6 @@
-# HashB.in
+# HashBin
 
-HashB.in is a paste bin that avoids knowledge of the contents of its pastes.
+HashBin is a paste bin that avoids knowledge of the contents of its pastes.
 
 ## How?
 
@@ -24,3 +24,4 @@ This site was inspired by two other very similar sites:
 
 - http://iamnotagoodartist.com/web/an-auto-updating-data-uri-text-editor/
 - [Hashify.me](http://bit.ly/dXYxGU)
+- [HasteBin](http://hastebin.com/) I pretty much stole their design wholesale

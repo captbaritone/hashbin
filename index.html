@@ -1,7 +1,14 @@
 <html>
 <head>
-    <title>HashB.in</title>
+    <title>HashBin</title>
     <style>
+        body, textarea, input {
+            background-color: #002b36;
+            color: #93a1a1;
+            font: 14px/20px monospace;
+            padding: 0;
+            margin: 0;
+        }
         #t {
             position: fixed;
             top: 0;
@@ -9,27 +16,88 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            margin: 0;
-            padding: 10px;
-            font: 14px/20px monospace;
+            margin: 30px 50px;
             outline: none;
             border: none;
             box-sizing: border-box;
         }
+        #tools {
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 20px 0 0;
+        }
+        a {
+            text-decoration: none;
+            color: #268bd2;
+        }
+        input {
+            display: none;
+            margin-top: 5px;
+            width: 100%;
+            border: 1px solid #268bd2;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        body, textarea, input {
+            background-color: #fdf6e3;
+            color: #93a1a1;
+            color: #586e75;
+        }
     </style> 
 </head>
 <body>
+    <div id='tools'>
+        <a href='#' id='share'>Share</a> | <a href='#' id='new'>New</a> | <a href='#' id='download' download='hashbin-download.txt'>Download</a> | <a href='https://github.com/captbaritone/hashb.in' target='_blank'>?</a>
+        <input id='urlInput'>
+    </div>
     <textarea spellcheck="false" id="t"></textarea>
+    <script language="javascript" src="js/lz-string.min.js"></script>
     <script>
-        var f, t = document.getElementById("t")
-        t.value = decodeURIComponent(window.location.hash.slice(1));
+        var f;
+        var t = document.getElementById("t");
+        var urlInput = document.getElementById("urlInput");
+
+        t.value = LZString.decompressFromBase64(window.location.hash.slice(1));
+        t.focus();
+        updateUrl();
+
         function updateUrl() {
+            window.location.hash = LZString.compressToBase64(t.value);
+            urlInput.value = window.location;
+            document.getElementById('download').href = "data:pain/text," + encodeURIComponent(t.value);
+        }
+
+        function contentChanged() {
             clearInterval(f);
             f = setTimeout(function() {
-                window.location.hash = encodeURIComponent(t.value);
+                    updateUrl();
             }, 500);
         }
-        t.addEventListener("keyup", updateUrl);
+
+        function share() {
+            urlInput.style.display = "block";
+            urlInput.select();
+            return false;
+        }
+
+        function unshare() {
+            urlInput.style.display = "none";
+        }
+
+        function clear() {
+            console.log('clear');
+            t.value = '';
+            unshare();
+            t.focus();
+            return false;
+        }
+
+        t.onkeyup = contentChanged;
+        t.onfocus = unshare;
+        document.getElementById('share').onclick = share;
+        document.getElementById('new').onclick = clear;
     </script>
 </body>
 </html>
