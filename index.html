@@ -117,6 +117,7 @@
         }
 
         t.onkeyup = contentChanged;
+        t.onpaste = contentChanged;
         t.onfocus = unshare;
         document.getElementById('share').onclick = share;
         document.getElementById('new').onclick = clear;
