@@ -2,6 +2,9 @@
 
 HashBin is a paste bin that avoids knowledge of the contents of its pastes.
 
+Since the server never comes in contact with the content, I posit that it
+should be immune to take down notices.
+
 ## How?
 
 There are two tricks employed here:
