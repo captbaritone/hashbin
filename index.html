@@ -87,16 +87,23 @@
 
         <input id='urlInput'>
     </div>
-    <textarea spellcheck="false" id="t"></textarea>
+    <textarea spellcheck="false" id="t">HashBin is a paste bin that avoids knowledge of the contents of its pastes
+
+- Click "New" to create your own paste
+- Click "?" to lean more
+
+
+--
+Jordan Eldrege (@captbaritone)</textarea>
     <script language="javascript" src="js/lz-string.min.js"></script>
     <script>
         var f;
         var t = document.getElementById("t");
         var urlInput = document.getElementById("urlInput");
 
-        t.value = LZString.decompressFromBase64(window.location.hash.slice(1));
-        if(t.value.length === 0) {
-            t.focus();
+        var content = LZString.decompressFromBase64(window.location.hash.slice(1));
+        if(content) {
+            t.value = content;
         }
 
         updateUrl(); // Update urlInput and download link
