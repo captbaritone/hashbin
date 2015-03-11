@@ -100,6 +100,7 @@ Jordan Eldrege (@captbaritone)</textarea>
         var f;
         var t = document.getElementById("t");
         var urlInput = document.getElementById("urlInput");
+        var download = document.getElementById('download');
 
         var content = LZString.decompressFromBase64(window.location.hash.slice(1));
         if(content) {
@@ -109,9 +110,27 @@ Jordan Eldrege (@captbaritone)</textarea>
         updateUrl(); // Update urlInput and download link
 
         function updateUrl() {
-            window.location.hash = LZString.compressToBase64(t.value);
+            window.location.hash = hash();
             urlInput.value = window.location;
-            document.getElementById('download').href = "data:pain/text," + encodeURIComponent(t.value);
+            document.title = title();
+            download.setAttribute('download', filename());
+            download.href = downloadUri();
+        }
+
+        function hash() {
+            return LZString.compressToBase64(t.value);
+        }
+
+        function title() {
+            return t.value ? t.value.slice(0,30) : 'HashBin';
+        }
+
+        function filename() {
+            return title().replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.txt';
+        }
+
+        function downloadUri() {
+            return "data:pain/text," + encodeURIComponent(t.value);
         }
 
         function contentChanged() {
