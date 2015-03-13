@@ -1,25 +1,53 @@
 # HashBin
 
-HashBin is a paste bin that avoids knowledge of the contents of its pastes.
+HashBin is a paste bin that never sees the contents of its pastes.
 
-Since the server never comes in contact with the content, I posit that it
-should be immune to take down notices.
+It takes advantage of some unique properties of the hash portion of a URL to
+avoid ever being able to see the content the pastes it helps create.
 
-## How?
+What is the "hash" of a URL, and why is it special? The hash is the portion of
+the URL that follows the `#` symbol. For example:
 
-There are two tricks employed here:
+```python
+http://example.com#the-hash
+```
 
-1. The entire contents of the paste are encoded in the URL. This means we are
-not storing the content of the paste on our server. Instead, the source
-providing the link is supplying the content.
+Here's what makes it special:
 
-2. We store this encoded content in the hash of the URL. This segment of the
-URL has the unique property of not being sent to the server.
+> When an agent (such as a Web browser) requests a web resource from a Web
+> server, the agent sends the URI to the server, but does not send the
+> [hash].
 
-## Doesn't this make the URLs super long?
+-- [Wikipedia](http://en.wikipedia.org/wiki/Fragment_identifier)
 
-Yes. However, in this age of URL shorteners, this is increasingly not
-a problem.
+At first glance that may not seem terribly note-worthy, but it allows for
+something very interesting. It allows you to store information in a URL that
+the server never sees, but can be read by JavaScript.
+
+You can think about it like this, a URL contains two distinct pieces of
+information:
+
+1. A pointer to a location where it can download a web app
+2. A piece of data which you want that app to interpret
+
+This is exactly what I have built. When your browser requests `http://hashb.in`
+it retrieves a simple JavaScript web app that immediately takes the content of
+the hash, uncompresses it, and displays it as text on the page.
+
+*For example:*
+
+![A sample HashBin paste](http://jordaneldredge.com/content/images/hashbin-sample.png)
+
+
+Since my server never sees, much less *provides*, the content being displayed
+on the page, I posit that I should be immune to takedown notices. Even if
+I did receive one, what action could I take? I suppose I could stop hosting the
+app, but that hardly seems reasonable.
+
+Say a website offered you a `.doc` file as well as a link to download Microsoft
+Word so that you could view that file. If that file was found to contain,
+illegal or copyrighted material, we wouldn't say that Microsoft should stop
+hosting Microsoft Word would we?
 
 ## Credit
 
